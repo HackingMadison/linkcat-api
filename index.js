@@ -1,6 +1,7 @@
 var express = require('express');
 var request = require('request');
 var cheerio = require('cheerio');
+var _ = require('lodash');
 
 var app = express();
 
@@ -20,7 +21,7 @@ app.get('/items/:id', function(req, res){
     if (!error && response.statusCode == 200) {
       var $ = cheerio.load(html);
       var response = {
-        title: $('span.displaytitle').text()
+        title: _.trimRight($('span.displaytitle').text(), "/ ")
       }
       res.json(response)
     }
